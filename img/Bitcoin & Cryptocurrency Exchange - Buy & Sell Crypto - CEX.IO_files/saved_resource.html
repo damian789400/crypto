@@ -1,0 +1,26 @@
+
+<!-- saved from url=(0038)https://auth.cex.io/auth/is-logged-in/ -->
+<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Session Management - OP iframe</title>
+</head>
+<body>
+<script type="application/javascript">
+(function () {
+
+	async function receiveMessage(e) {
+		if(e.data === 'ls.is_logged_in') {
+            const loginServiceUrl = e.target.location.origin;
+
+			const result = await fetch(`${loginServiceUrl}/auth/is-logged-in`, {method: 'POST'});
+			const isLoggedIn = await result.json();
+
+			e.source.postMessage({type: e.data, isLoggedIn}, e.origin);
+        }
+    }
+
+    window.addEventListener('message', receiveMessage, false);
+})();
+</script>
+
+</body></html>
